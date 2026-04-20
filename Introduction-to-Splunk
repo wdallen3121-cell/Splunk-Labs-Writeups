@@ -1,0 +1,81 @@
+What is Splunk?
+
+## Lab Overview
+Brief explanation of what this lab covers.
+
+Example:
+This lab explores the structure and core components of Active Directory and how they support authentication and resource management in enterprise environments.
+
+---
+
+## Objectives
+- Exploring Splunk Web
+- Running searches
+- Using commands
+- Creating reports
+- Creating dashboards
+- Understanding  Knowledge objects
+
+## Key Concepts
+
+| Unified Data Platform | Single platform for ingesting, storing, searching, querying, analyzing, governing data. |
+| Mission critical systems | Systems that must remain available for core/normal operations. Loss, misuse, disclosure, unauthorized access, or modification will severley impact the organization. |
+| Dashboards | Views made up of 'panels that show data in forms like charts, tables, lists, and search-driven visualizations. |
+| Support Requests | Users who ask IT/service team for help with a system, account, device, application, or access need. |
+| Application Support | Helps user and businesses keep software applications working correctly. |
+| Database Query | Request for information from a database. Asks a database to return specific data |
+| Slow Query Log | Log that records database queries that take longer than a defined threshold to run. Allows Ops to find performance problems and optimize systems. |
+| Splunk Index | 'heart of splunk'. Contains machine data from various sources: servers, network devices, web applications, etc. Inspects ingested data, labels data by sourcetype |
+| sourcetype | Used to 'break' machine data in to events |
+| Reports | Provide insight into data. Can be used for 'powering' dashboard panels |
+| Data Model | Structured data set of 'knowledge' |
+| Alerts | Custom triggers that allow notification of incidents in real-time |
+
+
+## Introduction to Splunk Write-up
+- 'unified data platform'
+- helps individuals and/or teams ensure CIA of mission critical systems
+  - teams may include: DevOps, SecOps, ITOps
+- makes machine data available, accessible, and usable 
+- Splunk software allows users to run searches, build 'dashboards', analyze data
+- all data in an environment can be used by a security team
+- Support request process:
+  - routed to 'application support'
+  - support searches for 'events where purchase attempts ended in an error'
+  - support pinpoints 'event that matches user's experience'
+  - 'event' is tied to a 'database query'
+  - 'database query is correlated to an 'entry in the slow query log'
+  - application support escalates issue to admin
+- events are timestamped and 'normalized to a consistent format'
+- indexed data is can be searched/analyzed
+- queries are entered into a splunk searchbar for finding 'events that contain values across multiple data sources'
+- analysis and statistics are ran on events using Splunk search language
+- 'search results' are saved to reports
+- 'Knowledge' is organized into 'structured data sets'(called 'data models'
+- Data models allow users to visualize data and navigate without the need for 'custom searches'
+
+## Lab Scenario
+- Fictional Gaming Company
+  - Company has offices in multiple locations: San Francisco, USA, Boston, USA, London, EU
+  - vendors sell thee companies games across the world and through online store
+  - they ingest data from online/retail sales, game logs, firewall/web security appliances, internal security data(badge reader access, AD credentials)
+
+
+
+## Security Relevance
+- Splunk helps security teams detect suspicious activity across many data sources in one place.
+- Indexted and normalized data improve investigations
+- Alerts and dashboards support faster response to incidents
+
+## SOC Analyst Perspective
+- Splunk gives SOC analysts a central place to search and investigate logs
+- Reports, dashboards and alerts help analysts act from the raw data
+- Data models make investigations more efficient
+
+## Key Takeaways
+- Splunk is a unified data platform that makes machine data searchable, usable and valuable
+- Splunk core ability is converting large amounts of system and application data into operational and security insights
+- Supports detection, investigation, monitoring, and incident response in a single environment
+
+
+
