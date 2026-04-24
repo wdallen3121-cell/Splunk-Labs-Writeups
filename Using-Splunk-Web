@@ -1,8 +1,16 @@
 Using Splunk Web
 
 ## Writeup/Lab Overview
+This will introduce the core structure of the Splunk platform and the main interface elements users interact with when searching and analyzing data.
+
 
 ## Objectives
+- Build foundational understanding of how users interact with Splunk
+- Learn how the platform is organized
+- Identify the purpose of Splunk apps
+- Distinguish between common user roles
+- Navigate the Search and Reporting App
+- Understand the basic interface components used to search, review, and analyze data. 
 
 ## Key Concepts
 | pre-configured environment | pre-built workspace.Delivered through an app. Provides specific functions, navigation, and knowledge objects.
