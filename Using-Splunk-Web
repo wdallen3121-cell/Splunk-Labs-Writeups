@@ -1,0 +1,75 @@
+Using Splunk Web
+
+## Writeup/Lab Overview
+
+## Objectives
+
+## Key Concepts
+| pre-configured environment | pre-built workspace.Delivered through an app. Provides specific functions, navigation, and knowledge objects.
+| Splunk instance | Running splunk deployment/environment where users search data, manage apps and create knowledge objects.
+| Roles | Determine what users can see and do. Splunk supports RBAC. Capabilities can be added/removed from roles. |
+| Splunk Enterprise | Self-managed Splunk platform deployment ran by organizations in their own environment |
+| User | Capable of seeing their own knowledge objects and those shared with them
+| Power| Capable of creating,sharing knowledge objects with 'all users of an app, and performing real-time searches
+| Administrator | Capable of installing apps, ingesting data and creating 'knowlege objects' for all users |
+| Knowledge Objects | Events, tags, lookups, field extractions, workflow actions, and saved searches that help organize, enrich and make use of data. |
+| Splunk Cloud | Splunk's managed cloud platform |
+| Search and Reporting App | default interface for searching/analyzing data |  
+| Splunk Bar | Appears on every page in Splunk. Used to switch between apps, edit account settings, view system messages, manage/edit configurations, monitor search jobs and find help |
+| App Bar | Allows app navigation |
+| Search Bar | Used to run searches by typing in a search string. |
+| Time Range Picker | Used to retrieve events over a specific period of time. |
+| Data Summary | Breakdown of the data indexed by host, source, and sourcetype. |
+| Source | file, directory path, network port, script from which an event originated . |
+| Host | hostname, IP address, or domain name of the machine from which the event originated. |
+| Table Views | UI-driven way to explore and prepare data withouth using SPL
+| Search History Menu | View and re-run past searches. Searches can be narrowed using the filter window. Show searches over various times(7 days to over 30 days)
+
+
+## Write-up
+- Splunk apps
+  - pre-configured environments/workspaces
+  - Sit on top of Splunk instance
+  - extend pre-built knowledge/capabilities
+  - solve specific use cases
+  - launched/managed from the Splunk home page
+- roles are what determine 'what a user is able to see, do, and interact with
+- (3) predefined default roles in Splunk Enterprise
+  - Administrator
+  - Power
+  - User
+- sc_admin is the name of the Splunk Cloud admin role
+- Splunk Cloud has additional Cloud-specific roles(token_auth and apps)
+- Splunk Home allows users to explore, launch, manage Splunk apps, find documentation and set custom dashboards
+- Admins/users(with appropriate capabilities) can add apps and data from the Home app.
+- Splunkbase contains hundreds of apps
+- "How to search" panel contains links to documentation 
+- (8) main 'components of the Search and Reporting app's interface
+  - 1) Splunk Bar
+  - 2) App Bar
+  - 3) Search Bar
+  - 4) Time Range Picker 
+  - 5) How to Search panel
+  - 6) Data Summary
+  - 7) Table Views
+  - 8) Search History Menu
+
+
+## Lab Walkthrough
+- login to Splunk Enterprise
+- view Splunk Home app page
+
+## Security Relevance
+- RBAC matters for security. Roles control what users can search, edit and administer, which limits unnecessary access and supports least privilege.
+- Knowledge objects improve detection and consistency. Event types, tags, lookups and saved searches help standardize how security teams identify and investigate suspicious activity.
+- Search and Reporting is central to security monitoring, because analysts use it to search, analyze, and visualize data. Key workspace for identifying anomalies and investigating events.
+
+## SOC Analyst Perspective
+- Search and Reporting app is where an analyst spends a lot of time. It is the main place to run searches, review results, and build reports/dashboards from findings.
+- Data Summary helps analysts quickly understand available data. Seeing data broken down by host, source, and sourcetype help analyst know where evidence is coming from.
+- Search history improves speed and repeatability. Analysts can revisit prior searches, rerun investigations, and refine previous work faster.
+
+## Key Takeaways
+- Splunk app organizes Splunk into use-case focused workspaces
+- Roles and capabilities control access and actions inside the platform
+- Search and Reporting App is the core interface for searching, analyzing, and presenting data
