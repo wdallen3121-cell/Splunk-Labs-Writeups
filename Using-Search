@@ -1,17 +1,90 @@
 Using Search
 
 ## Writeup/Lab Overview
+Introduce the Splunk Search page and the core features used to investigate activity in indexed areas.
 
 ## Objectives
+- Understand the layout and purpose of the Splunk Search Page
+- Identify how features such as the Events list, Field sidebar, timeline and search tabs support investigation
+- Learn how to narrow searches with the Time Range Picker to improve speed and relevance
+- Perform a basic search to investigate possible failed login activity on a server
+- Review returned events and use Splunk search results to support a security investigation
 
 ## Key Concepts
+| Search Page | Main workspace in the Search & Reporting app where users run searches, review results, inspect fields, use result tabs, and manage search jobs. |
+| Events list | shows events that contain the text that was searched for |
+| Fields Sidebar | Show the fields that were extracted |
+| Save As Menu | Allows users to save searches as 'knowledge objects |
+| Patterns Tab | Allows users to see patterns in data |
+| Statistics/Visualization Tab | Can show statistical or visual view of data |
+| Pivot | Point-and-click reporting tool that allows users to create tables, charts, and dashboards from data models without writing SPL. |
+| Quick Reports | Quickly generates simple reports and charts from selected fields in search results. |
+| Search Commands | Instructions used in SPL to filter, transform and analyze data. Chained chained together with pipes to build searches. |
+| Transforming Commands | Commands that create statistics and visualizations. Transform event data into data tables |
+| Data table | A tabular display of transformed search results, often produced by commands such as stats, chart, or timechart. |
+| Search Action button | Allows user to edit, send to background, inspect, and delete search jobs. | 
+| CSV | A comma-separated values export format used for tabular search results |
+| XML  An export format for search results that stores data in structured markup form. |
+| JSON | A lightweight structured export format often used when integrating search results with other tools or scripts. |
+| Fast Mode | Reduces field imformation. Disables field discovery.
+| Smart Mode | Default mode. Toggles behavior based on 'the type of search you are running'
+| Verbose Mode | Returns as much field and event data as possible. Discovers all possible fields
+| Timeline | Visual representation of events segmented over time. Segments are 'dynamically decided'(by the time range picker)
 
-## Introduction to Splunk Write-up
+## Writeup notes
+- limiting a search by time is key to faster results
+- Search page interface contains "Save As" menu, search results tab, search action buttons, search mode selector, and a timeline
+- Patterns tab allows a user to get a better understanding of what is happening in the data
+- total events returned is shown above the "Events" tab. Gives an option to return a random sample of the searched events
+- Search & Reporting App includes icons for pausing, stopping, printing, and exporting search jobs
+- Share icon provides link for sharing search job with others or bookmarking
+- Search jobs remain active for (10) minutes by default. Afterward Splunk will have to run the job again to return results.
+- Shared search job remains active for (7) days and remains readable(all those shared with will be able to see the exact results the user did when the search was first ran)
+- Export icon allows user to export 'events returned from the search job in raw, CSV, XML, or JSON format
+- there are (3) search modes that can be chosen:
+  - Fast Mode
+  - Smart Mode
+  - Verbose Mode
 
-## Lab Scenario
+## Lab Scenario: Search data to investigate potential security issue
+
+### Background:
+- Person using a social media website receives message that 'some suspicious-looking activity' has taken place on one of their company servers.
+- See what is happening on the server
+
+### Platform:
+- Splunk Search & Reporting App
+
+### Step 1:
+- Find out if someone is trying to login to server using bad credentials and failing
+- In the search bar type:
+  - "Failed"
+     - Splunk search assistant displays matching terms, contextual matches, and syntax documentation for the search
+
+### Step 2:
+- Filter search so that it only shows results for the last seven days
+- In the time range picker select:
+  - Last 7 days
+
+### Step 3:
+- Click the search icon
+  - search is sent to Splunk(where it becomes a "search job")
+
+### Step 4:
+- View Search Page
+
 
 ## Security Relevance
+- Searching authentication-related events helps identify signs of unauthorized access attempts, including repeated failed logins
+- Time filtering improves investigations by narrowing results to the most relevant activity and reducing noise
+- Search features like extracted fields, patterns, and visualizations help analysts spot anomalies and understand event context more quickly
 
 ## SOC Analyst Perspective
+- This lab reflects a common SOC workflow: receive suspicious activity report, search for related events, narrow the time range, and review evidence.
+- The Search page is one of the main places an analyst works when investigating alerts, login issues, and suspicious behavior.
+- Understanding search modes, results tabs, and export options help analysts move from raw event review to reporting and escalation.
 
 ## Key Takeaways
+- the Splunk Search page is built to help users investigate data through events, fields, patterns, statistics, and visualizations
+- Limiting searches by time makes results faster and more relevant
+- Basic searches for failed login activity can be an effective starting point for a security investigation
