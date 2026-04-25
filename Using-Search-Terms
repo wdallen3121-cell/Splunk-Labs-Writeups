@@ -1,0 +1,55 @@
+Using Search Terms
+
+## Writeup/Lab Overview
+This explains how Splunk search terms work when using wildcards, Boolean operators, parentheses, and exact phrases.
+
+## Objectives
+- Understand how wildcards broaden a search
+- Learn how Boolean operators affect search results
+- Use parentheses to control the order of evaluation in a search
+- Seaerch for exact phrases with quotations
+
+## Key Concepts
+| Wildcard | Search character that allows broad search for any event that contains certain text. |
+| Booleans | Logic operators AND/OR/NOT used to combine or exclude multiple terms . |
+| Boolean(NOT) | Used to see events that contain a specific text but not another specific text |
+| Boolean(AND) | Implied when useing multiple terms |
+| Boolean(OR) | Used to see events that contains a specific either (X) or (Y) text
+
+## Search Terms Writeup 
+- adding an asterisk(*) to the end of text, returns any event that STARTS with that text
+  - Example:
+    - Fail*(would return any event that includes fail, failure, and failed...)
+- search terms are not case sensitive
+- Boolean operations in the Splunk search command are evaluated in this order:
+  - 1) NOT
+  - 2) OR
+  - 3) AND
+- parenthesis can be used to 'control the order of evaluation'
+- exact phrases can be searched by placing the terms in quotes
+- use backslashes when searching exact phrases that contain quotations
+
+## Lab Scenario
+
+### Step 1: Use of Boolean operators
+- Type:
+  - "failed NOT (success or accepted)
+
+### Result
+- Splunk first evaluates the expression inside the parentheses
+- Excludes events containing 'success or 'accepted
+- Remaining results show events containing 'failed but not either 'success or 'accepted
+
+## Security Relevance
+- Wildcards and Boolean operators help analysts identify patterns tied to suspicious activity, such as failed logins, malware terms, or repeated error messages.
+- Excluding irrelevant terms with NOT can reduce noise and make investigations more focused
+- Exact phrase searching helps analysts locate precise strings, messages, or indicators that may be important during investigations
+
+## SOC Analyst Perspective
+- Understanding Boolean logic is important because it can change what evidence is returned
+- Parentheses, phrase searching, and wildcards help analysts perform more controlled and investigation-ready searches
+
+## Key Takeaways
+- Wildcards help broaden searches by matching terms that begin with specific text patterns
+- Boolean operators control whether terms are combined or excluded in search results
+- Splunks search command, evaluates Boolean expressions in order
