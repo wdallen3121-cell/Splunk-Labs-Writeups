@@ -1,0 +1,70 @@
+Exploring Events
+
+## Writeup/Lab Overview
+This writeup/lab focuses on exploring returned events in Splunk after running a search. It will show how events are displayed on a search page, how event text can be used to expand or narrow a search, and how event and field level actions can help organize data.
+
+## Objectives
+- Understand how Splunk displays returned events after a search is run
+- Learn how to interact with event text to add or remove terms from a search
+- Identify the purpose of Event Actions
+- Understand how field and tag actions enrich event data
+- Use event exploration to refine a search related to 'failed authentication' activity
+
+## Key Concepts
+| Build Event Type | Creates an event type from a search. |
+| Event Type | Specific type or useful collection of events. |
+| Extract Fields | Opens the field extractor. Allows user to create 'field extractions' from returned events. | 
+| Field Extractor | Splunk tool that helps create 'field extractions' from event data. Based on a selected source or source type |
+| Show Source | Displays raw source data associated with an event and helps define fields tied to a source or sourcetype |
+| edit tag | Add or modify tags associated with an event type or related knowledge object.
+| Tags | Help categorize data for easier searching and reporting |
+
+## Exploring Events Write-up
+- a list of events is returned when a search is ran
+- returned events can be used to 'expand' a search and interact with data
+- text searched for is highlighted in the event list
+- events are returned in 'reverse chronological order'(newest event is shown first)
+- time is normalized in the index to a consistent format
+- timestamp is based on 'time zone set in the user account'
+- selected fields are shown at the bottom of each event(host, source, sourcetype)
+- hovering over text in an event highlights the text
+- clicking on highlighted text adds the text to the search job(giving the option to exclude, include or launch a new search of the text)
+- each option of the higlighted text has an icon
+- clicking the info button of an event shows all 'extracted fields for an event'
+- checkmarks designate what fields are shown in an event
+- "Event Actions" dropdown provides options:
+  - Build Event Type
+  - Extract Fields
+  - Show Source
+- "Field Actions" link allows user to "edit tag"
+
+## Lab Scenario: Filter previous "Failed" Search Job
+
+### Step 1:
+- hover over the text "password'
+- click on the highlighted text
+- click "add to search"(this step adds "password" to the search bar)
+- new events are now returned to show "Failed Password" events
+
+### Step 2:
+- click on higlighted text "password"
+- click "remove from search"
+- "password" is now removed from the search job
+
+### Step 3:
+- Select the "info button" next to an event to see all "extracted fields for an event"
+
+## Security Relevance
+- Explorign individual events helps analysts validate whether suspicious activity is real or noise
+- Event-level filtering narrows investigations quickly.
+- Field extraction and tagging improve future detections by making data more structured and searchable.
+
+## SOC Analyst Perspective
+- Common SOC task: start with broad search, then refine results using values found in returned events
+- Event Actions are useful because they turn one-off observations into resuable knowledge objects.
+- Better field extraction and tagging can help make investigations faster and more consistent across the team
+
+## Key Takeaways
+- Returned events are interactive data that can be used to refine searches
+- Event types, extracted fieldss and tags help turn raw events into more useful data
+- Event exploration is an important step for more focused investigations
