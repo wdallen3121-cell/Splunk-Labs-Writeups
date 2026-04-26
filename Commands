@@ -1,0 +1,102 @@
+Commands
+
+## Writeup/Lab Overview
+This repository introduces core parts of Splunk Search Processing Language(SPL).
+
+## Objectives
+- Understand the (5) main SPL parts used in a search
+- Recognize how commands differ from search terms
+- Learn how functions, arguments, and clauses shape the results of transforming commands
+- Understand why filtering early in a search improves efficiency
+- Use clauses and commands to summarize and refine results in a search pipeline
+
+## Key Concepts
+| Search terms | Foundation of search queries. Tells Splunk what events to retrieve before any additional processing. |
+| Commands | Tell Splunk "what should be done" with the search results, such as creating charts, computing statistics, and formatting. |
+| Functions | Operations used inside certain commands to calculate, evaluate, or summarize data. |
+| Arguments | Values or fields passed into commands or functions. |
+| Clauses | Keywords that modify how results are grouped, labeled, or defined. |
+| Web Security Appliance data | Log data produced by a web security appliance, such as web usage, policy violations, usernames, and requested sites. |
+| clause(as) | Renames a field or calculation in the results. |
+| clause(by) | Groups results by one or more fields. |
+| Search commmand | Filters results at any time in a search pipeline. Behaves similarly to the Search Terms. Allows user to filter results further down the pipline |
+| Stats command | A transforming command that calculates aggregate statistics, such as count, sum, average, minimum, or maximum, over the incoming search results. |
+
+## Commands Write-up
+- Splunk's search language is built from (5) components:
+  - Search terms
+  - Commands
+  - Functions
+  - Arguments
+  - Clauses
+- It is best practice to filter searches in the Search terms before piping. 
+- if a command references a specific value then the referenced value will be case sensitive
+- host value must be exact match(including case) when using 'replace command'
+- limiting time range is the most efficient way to filter events
+- less data that splunk has to search the faster the software is able to run
+- Index/Source/Host/Sourcetype are the most 'powerful' default fields
+- the more detailed the search the better the result
+- when possible use the OR or IN operators instead of wildcards
+- apply filtering commands as early as possible in a search
+- filtering limits the number of events(which makes future manipulation of data faster)
+
+## Lab Scenario: Splunk Search Language
+
+### Step 1:
+- SSL Example:
+  - index=network sourcetype=cisco_wsa+squid usage=Violation | stats count(usage) as Visits
+    - Search terms:
+      - index=network
+      - sourcetype=cisco_wsa_squid
+      - usage=Violation
+    - Command:
+      - Stats
+    - Function:
+      - count
+    - Argument:
+     - (usage)
+    - Clause:
+      - as
+  - the (2) search components(Search terms and Command) are seperated by a pipe
+
+- Results
+  - query searches the web security appliance data in the network index
+  - counts the number of 'visits to prohibited sites from the environment'
+  - time range is over the last (30) days
+  - count is stored in a field called "Visits"
+
+### Step 2:
+- append a "by" clause with the "cs_username" field:
+  - index=network sourcetype=cisco_wsa+squid usage=Violation | stats count(usage) as Visits by cs_username
+
+- Results
+  - splits the count of events by individual employees
+
+### Step 3:
+- Append "search" command to end of search query
+  - index=network sourcetype=cisco_wsa+squid usage=Violation | stats count(usage) as Visits by cs_username | search Visits
+
+- Results
+  - filters 'visits that have violated the web policy more than once in month'
+
+### Step 4:
+- index=web sourcetype=access_combined purchase | replace www1 with server1 in host
+
+- Results
+  - resulting host value ww1 is replaced with server1
+
+## Security Relevance
+- Commands such as "stats" help analysts turn raw event data into counts, summaries, and grouped results that make suspicious activity easier to spot. "Stats" is a command for calculating aggregate statistics like count, average, and sum over incoming result sets.
+- Filtering as early as possible reduces the amount of data that must be processed later in a pipeline, making security searches faster and more practical when working with large log volumes. Practical search performance improves when the dataset is narrowed early.
+- Grouping activity with a "BY" clause can help analysts identify which user, host, or system is associated with violations or unusual behavior.
+
+## SOC Analyst Perspective
+- Search command can be used at the start to retrieve events later in a pipeline to filter prior results.
+- Clauses are valuable because they turn large numbers of raw event data into smaller, investigation-friendly event lists.
+- Filtering must be based on fields produced by transformations.
+
+## Key Takeaways
+- SPL searches are built from search terms, commands, functions, arguments, and clauses.
+- Stats command calculates aggregate statistics over incoming search results
+- BY groups statistics by field value
+- Filtering early makes processing faster
