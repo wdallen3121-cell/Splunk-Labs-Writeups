@@ -1,0 +1,147 @@
+Creating Reports
+
+## Writeup/Lab Overview
+This repository explains how Splunk reports are created from search results and how reports can be saved, shared, and more.
+
+## Objectives
+- Understand what a report is in Splunk and how it is created from a search.
+- Learn the purpose of Quick Reports and common field-based report actions.
+- Understand how saved reports can be shared, scheduled, accelerated, and embedded
+- Recognize how map visualizations can be build from geolocation data using commands
+- Use report settings such as permissions and scheduling to make reports available to other users.
+
+## Key Concepts
+| Quick Reports | Built-in shortcuts that generate simple reports or visualizations from selected fields in search results. |
+| Events with this field | Quick report option that filters/focuses on events containing a selected field. |
+| Top values by time | Quick report-style view that shows how th emost common values field change(over time). |
+| Rare Values | Report or command result showig the least common values of a field. Shows the least frequent values. |
+| Cluster | In map visualization's, cluster(bubble-cluster views) group nearby points visually on a map. Use the geostats command. |
+| Choropleth map | A map visualization that uses colored geographic regions to represent data values. Built from geographic data, using iplocation command. |
+| Creator | User who created the report. |
+| App | Splunk App in which the report is stored or shared. |
+| Schedule | Setting that runs the report automatically at defined time intervals instead of only on demand. |
+| Action | A trigger action that runs when a scheduled search or report executes, such as sending email or posting to a webhook. |
+| Acceleration | Feature that improves report performance by using summarized data for faster report generation. |
+| Permissions | Setting that control who can view or edit the report. |
+| Modified data | Metadata showing when or how a saved report has been changed. |
+| Embedding | Ability to place a report or its visualization into another page or external location. |
+| Clone | Creating a copy of an existing report so it can be reused or modified without changing the original. |
+| Chron Schedule | A schedule format used to define recurring run times for saved reports or searches. |
+| Webhook | An action that sends reports or search results to an external URL when a scheduled search runs. |
+
+## Creating Reports Writeup
+- Visualizing results on a map allows analysts to see trends and locations in relation to each other
+- Organizations should have a defined naming convention for saving reports
+  - helps keep reports organized and easy to find
+- Common naming convention:
+  - group the report is for
+  - type of obejct
+  - simple description of what the report contains
+- A new set of results is returned when a report is ran
+- Reports details can be found in in the 'Edit' dropdown and 'Arrow' next to the Report title
+- Reports are set by default to display only for the creator of the report
+- The option to display for 'All Apps' is only available to Admin Users(by default)
+- Power users are granted read/write permissions on the report
+- 'Run As' allows the report to either be run as the owner of the report or 'the user that is running the report'
+- Reports ran as 'User' only allows information they have permissions for to be shown
+- Reports can be ran at 'timed intervals' using the 'edit schedule' link
+  - multiple benefits to scheduling a report:
+    - reduce strain on environment(caused by repeatedly running 'ad hoc searches')
+- Reports can be configured to run every hour, day, month, or week
+- Scheduling a report removes the 'time range picker' option from the report
+- 'Trigger Actions' can enhance report functionality
+  - deliver scheduled search results(via email)
+  - Use 'webhook' to post results to an external URL
+  - Run custom scripts(defined by your organization)
+    
+
+## Lab Walkthrough: Creating Reports
+
+### Step 1: Create Search
+- Type: index=security sourcetype=linux_secure host!=mail* "Failed password" src_i=*
+  - this search returns events containing failed login attempts
+  - A couple of the events may be due to user error
+  - multiple failed logins may indicate a security incident
+  - team wants to know 'where these attempts happened'
+  - field sidebar does not show any geographical information
+
+### Step 2: Append 'iplocation command'(with the src_ip field)
+- Type: index=security sourcetype=linux_secure host!=mail* "Failed password" src_ip=* | iplocation src_ip
+  - adds geographic context to returned events
+  - adds additional fields to fields  sidebar
+
+### Step 3: Expand Country Field
+- Click Country
+  - shows the top (10) values for the field, count and percentage of events that contained the value
+  - Window shows (4) links for 'quick reports':
+    - Top Values
+    - Events with this field
+    - Top Values by time
+    - Rare Values
+
+### Step 4: Select 'Top Values' from the Quick Reports
+- Appends "Top" command to the original search
+  - index=security sourcetype=linux_secure host!=mail* "Failed password" src_ip=* | iplocation src_ip | top limit=20 Country 
+  - allows visualization of data in a Bar graph or Column chart
+
+### Step 5: See results on a map
+- replace "top" command with "geostats" command
+- type: index=security sourcetype=linux_secure host!=mail* "Failed password" src_ip=* | iplocation src_ip | geostats count by Country
+  - allows analyst to use the 'context provided by the iplocation command' to plot data on a cluster or 'choropleth map'
+
+### Step 6: Share access with others by saving search as a report
+- Open 'Save As' menu
+- Select Report
+- Enter Name: "Security_Report_FailedSshAttempts
+- Add optional description of report
+- Confirm the data will be displayed in a visualization
+- Choose to show time range picker
+- After saving, additional settings are presented:
+  - Permissions
+  - Schedule
+  - Acceleration
+  - Embed
+
+### Step 7: View Report
+- Click 'View'
+
+### Step 8: Change time range of events shown
+- Click 'Time range button'
+- Change time range to 'Last (7) days
+
+### Step 9: Access all Reports
+- Click 'Reports' Tab, in the application menu
+
+### Step 10: Find and run created report
+- Select title or Click 'Open in Search'
+- Selecting arrow next to the titled report expands to show details
+  - Creator
+  - App
+  - Schedule
+  - Actions
+  - Acceleration
+  - Permissions
+  - Modified data
+  - Embedding
+
+### Step 11: Edit Permissions of the Report
+- Change 'Display For' option to 'App'
+  - allows the report to be shared with 'all other users of the app in which the report was created'
+  - the App the report was created in was "Search & Reporting"
+
+
+## Security Relevance
+- Reports help security teams convert reoccuring searches into reusable views for monitoring suspicious behavior, policy violations, and authentication failures. Splunk positions the platform around search, analysis, visualization, alerting, and reporting on operational data.
+- Geographic enrichment with 'iplocation' can help analysts see where suspicious login attempts or other IP-based events are coming from, which improves triage context. 'iplocation' adds location information based on IP addresses and can be used to generate map visualizations.
+- Scheduled reports and trigger actions help automate repeatable visibility into security-relevant activity rather than relying only on manual searches.
+
+## SOC Analyst Perspective
+- Common SOC workflow: start with a search for suspicious authentication activity, enrich the data, visualize it, and save the search as a reusable report.
+- Quick reports help analysts turn a field into a report or visualization quickly without writing a full transforming search.
+- Sharing, permissions, and sheduling matter in a SOC because reports are often meant for repeated team use.
+
+## Key Takeaways
+- A Splunk report is a saved search that can be rerun, shared, scheduled, and visualized in different ways.
+- Top command returns most common field values, rare command returns the least common values.
+- iplocation adds geographic context from IP addresses, and geostats can be used for cluster map visualizations
+- Scheduling and trigger actions make reports more useful for recurring operational or security monitoring.
