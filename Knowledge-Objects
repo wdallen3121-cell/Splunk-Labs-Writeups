@@ -1,0 +1,68 @@
+Knowledge Objects
+
+## Writeup/Lab Overview
+This repositor coves knowledge objects in Splunk and how they help users interpret, classify, normalize, enrich, and model data for better searching and analysis.
+
+## Objectives
+- Understand what knowledge objects are and why they matter in Splunk.
+- Learn the main categories of knowledge objects
+- Recognize how fields, event types, lookups, tags, aliases, and data models improve search and analysis.
+- Understand the roles of knowledge managers and pivot users in working with structured data
+
+## Key Concepts
+| Data Interpretation | Turn raw event data into more meaningful information. |
+| Data Classification | Organize events into categories to allow similar activity to be identified and searched consistently. |
+| Data Normalization | Standardize different data sources so they can be searched and compared more consistently. |
+| Data Enrichment | Addition of useful context to event data, such as external values, labels, or links. |
+| Data Models | Hierarchically-structured 'datasets'. May consist of events, searches, and/or transactions. |
+| Data set | Collection of related data grouped for analysis. Can represent events, searches, or transactions. |
+| Knowledge Manager | Oversee 'knowledge object creation/usage, ensure best practice for naming conventions, normalizing event data, and creating 'data models' for Pivot users. |
+| Pivot User | User who works with data models in Pivot. Analyzes data and builds reports or visualizations without writing raw SPL. |
+| Extraction | Identifying and pulling fields or values out of raw event data so they can be searched and analyzed more easily. |
+| Sourcetype | Default field that tells Splunk how incoming data should be interpreted and segmented into events. |
+| Fields | Values automatically extracted from event data(based on selected sourcetype). Help describe and search the contents of an event. |
+| Field Extractions | Manually extracted to add additional insight to data. |
+| Calculated Fields | Added to events at search time. Perform calculations(based on the 'values of existing fields')
+| Event types | Categories of events(based on search terms). |
+| Transactions | Collections of 'conceptually-related events that span time'. |
+| Lookups | Allow the addition of other fields and values not included in the indexed data(to the events). |
+| Workflow actions | Allow the creation of 'links within events that interact with external resources or narrow searches
+| Tags | Allow the designation of descriptive names for 'key-value pairs'. Enable searching for 'events that contain particular field values'. |
+| Key-value pairs | Data expressed as a field name and its assosciated value, such as 'status=failed' or 'user=bsmith'. |
+| Field Aliases | Give a way to normalize data over multiple sources. One or more aliases can be assigned to any 'extracted field'. Can apply to 'fields from a lookup table. |
+
+## Knowledge Objects Write-up
+- Help analysts and users discover and analyze data
+- can be created by a user(then shared with other users based on permission settings)
+- can be saved/reused by multiple people or in multiple "apps"
+- can be used in a search
+- grouped into (5) categories
+  - Interpretation
+    - Fields
+    - Field Extractions
+    - Calculated Fields
+  - Classification
+    - Event Types
+    - Transactions
+  - Normalization
+    - Tags
+    - Field Aliases
+  - Enrichment
+    - Lookups
+    - Workflow Actions
+  - Data Models
+
+## Security Relevance
+- Knowledge objects make security data more usuable by turning raw logs into structured, searchable information. Helps analysts search faster and investigate more accurately.
+- Normalization tools such as tags and field aliases help teams search across different log sources more consistently, which is important in security environments with many device types and formats.
+- Enrichment objects such as lookups and workflow actions add context to events, whcih can make alerts and investigations more meaningful.
+
+## SOC Analyst Perspective
+- Knowledge objects reduce repetitive work. Instead of rebuilding the same logic every tim, analysts can rely on saved field extractions, event types, tags, and lookups.
+- Data models are useful because they support structured analysis and lets teams use Pivot and other tools efficiently.
+- Strong knowledge management improves consistency across a SOC by helping different analysts serach and interpret data the same way.
+
+## Key Takeaways
+- Knowledge objects help make Splunk data easier to search, organize, classify, enrich, and analyze.
+- The (5) main categories of Knowledge Objects are Interpretation Objects, Classification Objects, Normalization Objects, Enrichment Objects, and Data Models.
+- 
